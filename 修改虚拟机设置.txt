@@ -34,17 +34,20 @@ DNS1="192.168.8.2"
 	HOSTNAME=hadoop101
 4 修改  hosts
 	vim /etc/hosts
-	
+
 192.168.8.130 hadoop130
 192.168.8.131 hadoop131
 192.168.8.132 hadoop132
 192.168.8.133 hadoop133
 
-	
+
 创建用户和组
 	groupadd hadoop
 	useradd -d /opt/hadoop -g hadoop hadoop
-	
-	
-	
-	
+
+解决centos 没有ip
+ service  NetworkManager stop
+ chkconfig NetworkManager off
+ service network restart
+
+
