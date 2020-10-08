@@ -1,4 +1,4 @@
-package com.wanhao.flow;
+package com.wanhao.sort;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,31 +14,31 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * @author : LiuLiHao
  * 描述：
  */
-public class FlowSumDriver {
+public class SortFlowSumDriver {
 
     public static void main(String[] args) throws Exception {
-        args = new String[]{"D:/input/phone","D:/output1"};
+        args = new String[]{"D:/output1","D:/output3"};
         Configuration configuration = new Configuration();
         Job job = Job.getInstance(configuration);
 
-        job.setJarByClass(FlowSumDriver.class);
+        job.setJarByClass(SortFlowSumDriver.class);
 
-        job.setMapperClass(FlowSumMapper.class);
-        job.setReducerClass(FlowSumReducer.class);
+        job.setMapperClass(SortFlowMapper.class);
+        job.setReducerClass(SortFlowReducer.class);
 
         //输出类型
-        job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(FlowBean.class);
+        job.setMapOutputKeyClass(SortFlowBean.class);
+        job.setMapOutputValueClass(Text.class);
 
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(FlowBean.class);
+        job.setOutputValueClass(SortFlowBean.class);
 
         FileInputFormat.setInputPaths(job,new Path(args[0]));
         FileOutputFormat.setOutputPath(job,new Path(args[1]));
 
         //自定义分区输出结果
-//        job.setPartitionerClass(FlowPartition.class);
-//        job.setNumReduceTasks(5);
+        job.setPartitionerClass(SortFlowPartition.class);
+        job.setNumReduceTasks(5);
 
         //处理小文件
         job.setInputFormatClass(CombineTextInputFormat.class);
